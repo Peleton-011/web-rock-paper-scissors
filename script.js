@@ -29,3 +29,58 @@ function computerPlay () {
     let choice = (Math.random().toFixed(3) * 1000) % 3;
     return choice;
 }
+
+function playRound() {
+    let pC = userPlay();
+    //If there's an error two times, the program chooses at random
+    pC = pC == 3 ? userPlay() : computerPlay();
+    let cC = computerPlay();
+
+    //This is like an enum:
+    
+    let R = 0;
+    let P = 1;
+    let S = 2;
+
+    //Evaluates who wins
+
+    if (((pC == R)&&(cC == S))||((pC == P)&&(cC == R))||((pC == S)&&(pC == P))) {
+        playerWin(pC, cC);
+    } else if (pC == cC) {
+        playerTie(pC);
+    } else {
+        playerLose(pC, cC);
+    }
+    
+}
+
+function playerWin(player, computer) {
+    let result = "You win! "
+    result = result.concat(choiceToText(player), " beats ", choiceToText(computer), "!")
+}
+
+function playerLose(player, computer) {
+    let result = "You lose! "
+    result = result.concat(choiceToText(computer), " beats ", choiceToText(player), "!")
+}
+
+function playerTie(player) {
+    let result = "It's a tie! "
+    result = result.concat(" You both chose ", choiceToText(player),"!")
+}
+
+function choiceToText(choice) {
+    switch (choice) {
+        case 0:
+            return "Rock";
+            break;
+        case 1:
+            return "Paper";
+            break;
+        case 2:
+            return "Scissors";
+            break;
+        default:
+            "ERROR"
+    }
+}
