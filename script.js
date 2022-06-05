@@ -46,10 +46,13 @@ function playRound() {
 
     if (((pC == R)&&(cC == S))||((pC == P)&&(cC == R))||((pC == S)&&(pC == P))) {
         playerWin(pC, cC);
+        return 1;
     } else if (pC == cC) {
         playerTie(pC);
+        return 0;
     } else {
         playerLose(pC, cC);
+        return -1;
     }
     
 }
@@ -57,16 +60,19 @@ function playRound() {
 function playerWin(player, computer) {
     let result = "You win! "
     result = result.concat(choiceToText(player), " beats ", choiceToText(computer), "!")
+    console.log(result)
 }
 
 function playerLose(player, computer) {
     let result = "You lose! "
     result = result.concat(choiceToText(computer), " beats ", choiceToText(player), "!")
+    console.log(result)
 }
 
 function playerTie(player) {
     let result = "It's a tie! "
     result = result.concat(" You both chose ", choiceToText(player),"!")
+    console.log(result)
 }
 
 function choiceToText(choice) {
@@ -84,3 +90,19 @@ function choiceToText(choice) {
             "ERROR"
     }
 }
+
+//n is the number of rounds needed to complete a full game
+function playGame(curr = 0, n = 5) {
+    //If n has not been reached, it calls itself incrementing curr + plays a round
+    result = playRound() + (curr != n ? playGame(++curr,n) : 0);
+
+    if (result < 0) {
+        console.log("You lost...")
+    } else if (result > 0) {
+        console.log("You won!");
+    } else {
+        console.log("It's a tie... Somehow??")
+    }
+}
+
+playGame();
