@@ -1,7 +1,17 @@
 
 //Gets inputs, returns 3 if there was an error, 0 for rock, 1 for paper and 2 for scissors
+const buttons = document.querySelectorAll("button");
 
-function userPlay () {
+let playerWins = 0;
+let computerWins = 0;
+
+buttons.forEach(btn => {
+    btn.addEventListener("click", e => {
+        playRound(e.target.classList[0]);
+    });
+});
+
+function userConsolePlay () {
     let input = String(prompt("Choose Rock (r), Paper (p) or Scissors(s)"))
 
     //Any input is valid so long as it begins with r, p or s case insensitive
@@ -30,8 +40,23 @@ function computerPlay () {
     return choice;
 }
 
-function playRound() {
-    let pC = userPlay();
+function playRound(choice) {
+    
+    switch (choice) {
+        case "rock":
+            choice = 0;
+            break;
+        case "paper":
+            choice = 1;
+            break;
+        case "scissors":
+            choice = 2;
+            break;
+        default:
+            choice = computerPlay();
+
+    }
+
     let cC = computerPlay();
 
     //This is like an enum:
@@ -42,15 +67,17 @@ function playRound() {
 
     //Evaluates who wins
 
-    if (((pC == R)&&(cC == S))||((pC == P)&&(cC == R))||((pC == S)&&(pC == P))) {
-        playerWin(pC, cC);
-        return 1;
-    } else if (pC == cC) {
-        playerTie(pC);
-        return 0;
+    if (((choice == R)&&(cC == S))||((choice == P)&&(cC == R))||((choice == S)&&(choice == P))) {
+        playerWin(choice, cC);
+        playerWins += 1;
+        return;
+    } else if (choice == cC) {
+        playerTie(choice);
+        return;
     } else {
-        playerLose(pC, cC);
-        return -1;
+        playerLose(choice, cC);
+        computerWins += 1;
+        return;
     }
     
 }
