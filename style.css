@@ -1,0 +1,34 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: pink;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+button {
+    border-style: solid;
+    border-color: darkgray;
+    border-radius: 5px;
+    width: 70px;
+    height: 30px;
+
+}
+
+.win {
+    color: yellowgreen;
+}
