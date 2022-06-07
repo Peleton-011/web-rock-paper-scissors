@@ -90,18 +90,18 @@ function choiceToText(choice) {
 }
 
 //n is the number of rounds needed to complete a full game
-function playGame(curr = 0, n = 5) {
-    //If n has not been reached, it calls itself incrementing curr + plays a round
-    result = playRound() + (curr < n ? playGame(++curr,n) : 0);
+// function playGame(curr = 0, n = 5) {
+//     //If n has not been reached, it calls itself incrementing curr + plays a round
+//     result = playRound() + (curr < n ? playGame(++curr,n) : 0);
 
-    if (result < 0) {
-        console.log("You lost...")
-    } else if (result > 0) {
-        console.log("You won!");
-    } else {
-        console.log("It's a tie... Somehow??")
-    }
-    return result;
-}
+//     if (result < 0) {
+//         console.log("You lost...")
+//     } else if (result > 0) {
+//         console.log("You won!");
+//     } else {
+//         console.log("It's a tie... Somehow??")
+//     }
+//     return result;
+// }
 
-playGame();
+// playGame();
