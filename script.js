@@ -2,14 +2,33 @@
 //Gets inputs, returns 3 if there was an error, 0 for rock, 1 for paper and 2 for scissors
 const buttons = document.querySelectorAll("button");
 
+const title = document.querySelector(".title");
+const txt = document.querySelector(".text");
+
 let playerWins = 0;
 let computerWins = 0;
+
+updateScore();
+console.log("cum")
 
 buttons.forEach(btn => {
     btn.addEventListener("click", e => {
         playRound(e.target.classList[0]);
     });
 });
+
+function updateScore () {
+
+    const player = document.querySelector(".player");
+    const computer = document.querySelector(".computer");
+
+    player.textContent = String(playerWins);
+    computer.textContent = String(computerWins);
+
+    if ((playerWins > 4)||(computerWins > 4)) {
+        gameEnd();
+    }
+}
 
 function userConsolePlay () {
     let input = String(prompt("Choose Rock (r), Paper (p) or Scissors(s)"))
@@ -69,35 +88,55 @@ function playRound(choice) {
 
     if (((choice == R)&&(cC == S))||((choice == P)&&(cC == R))||((choice == S)&&(choice == P))) {
         playerWin(choice, cC);
-        playerWins += 1;
         return;
     } else if (choice == cC) {
         playerTie(choice);
         return;
     } else {
         playerLose(choice, cC);
-        computerWins += 1;
         return;
     }
-    
+}
+
+function setState(node, state) {
+    switch (state) {
+        case "win":
+            node.classList.remove("lose");
+            node.classList.add("win");
+            break;
+        case "lose":
+            node.classList.remove("win");
+            node.classList.add("lose");
+            break;
+        default:
+            node.classList.remove("lose");
+            node.classList.remove("win");
+    }
 }
 
 function playerWin(player, computer) {
-    let result = "You win! "
-    result = result.concat(choiceToText(player), " beats ", choiceToText(computer), "!")
-    console.log(result)
+    title.textContent = "You win! "
+    txt.textContent = choiceToText(player) + " beats " + choiceToText(computer) + "!";
+    playerWins += 1;
+    setState(title, "win");
+    setState(txt, "win");
+    updateScore();
 }
 
 function playerLose(player, computer) {
-    let result = "You lose! "
-    result = result.concat(choiceToText(computer), " beats ", choiceToText(player), "!")
-    console.log(result)
+    title.textContent = "You lose! "
+    txt.textContent = choiceToText(computer) + " beats " + choiceToText(player) + "!";
+    computerWins += 1;
+    setState(title, "lose");
+    setState(txt, "lose");
+    updateScore();
 }
 
 function playerTie(player) {
-    let result = "It's a tie! "
-    result = result.concat(" You both chose ", choiceToText(player),"!")
-    console.log(result)
+    title.textContent = "It's a tie!"
+    txt.textContent = "You both chose " + choiceToText(player) + "!";
+    setState(title);
+    setState(txt);
 }
 
 function choiceToText(choice) {
@@ -113,6 +152,18 @@ function choiceToText(choice) {
             break;
         default:
             "ERROR"
+    }
+}
+
+function gameEnd() {
+    if (playerWins > 4){
+        setState(txt, "win");
+        setState(title, "win");
+        txt.textContent = "Well done!"
+    } else {
+        setState(txt, "lose");
+        setState(title, "lose");
+        txt.textContent = "Better luck next time..."
     }
 }
 

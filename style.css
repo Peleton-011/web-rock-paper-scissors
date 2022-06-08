@@ -26,9 +26,26 @@ button {
     border-radius: 5px;
     width: 70px;
     height: 30px;
+    box-shadow: black 2px 2px 2px;
+}
 
+.score {
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    gap: 10px;
+}
+
+.text,
+.title,
+.score {
+    color: white;
+    text-shadow: black 2px 2px 2px;
 }
 
 .win {
     color: yellowgreen;
+}
+
+.lose {
+    color: tomato;
 }
