@@ -9,7 +9,6 @@ let playerWins = 0;
 let computerWins = 0;
 
 updateScore();
-console.log("cum")
 
 buttons.forEach(btn => {
     btn.addEventListener("click", e => {
@@ -17,7 +16,7 @@ buttons.forEach(btn => {
     });
 });
 
-function updateScore () {
+function updateScore() {
 
     const player = document.querySelector(".player");
     const computer = document.querySelector(".computer");
@@ -25,42 +24,19 @@ function updateScore () {
     player.textContent = String(playerWins);
     computer.textContent = String(computerWins);
 
-    if ((playerWins > 4)||(computerWins > 4)) {
+    if ((playerWins > 4) || (computerWins > 4)) {
         gameEnd();
     }
 }
 
-function userConsolePlay () {
-    let input = String(prompt("Choose Rock (r), Paper (p) or Scissors(s)"))
-
-    //Any input is valid so long as it begins with r, p or s case insensitive
-    switch (input[0]){
-        case "r":
-        case "R":
-            return 0;
-            break;
-        case "p":
-        case "P":
-            return 1;
-            break;
-        case "s":
-        case "S":
-            return 2;
-            break;
-        default:
-            console.log("Sorry, there was an error")
-            return 3;
-    }
-}
-
-function computerPlay () {
+function computerPlay() {
     //Random number from 0 to 1, cut to 3 decimal places, times 1000, modulo 3, so we get [0,2]
     let choice = (Math.random().toFixed(3) * 1000) % 3;
     return choice;
 }
 
 function playRound(choice) {
-    
+
     switch (choice) {
         case "rock":
             choice = 0;
@@ -79,14 +55,14 @@ function playRound(choice) {
     let cC = computerPlay();
 
     //This is like an enum:
-    
+
     let R = 0;
     let P = 1;
     let S = 2;
 
     //Evaluates who wins
 
-    if (((choice == R)&&(cC == S))||((choice == P)&&(cC == R))||((choice == S)&&(choice == P))) {
+    if (((choice == R) && (cC == S)) || ((choice == P) && (cC == R)) || ((choice == S) && (choice == P))) {
         playerWin(choice, cC);
         return;
     } else if (choice == cC) {
@@ -156,7 +132,7 @@ function choiceToText(choice) {
 }
 
 function gameEnd() {
-    if (playerWins > 4){
+    if (playerWins > 4) {
         setState(txt, "win");
         setState(title, "win");
         txt.textContent = "Well done!"
@@ -165,21 +141,35 @@ function gameEnd() {
         setState(title, "lose");
         txt.textContent = "Better luck next time..."
     }
+    buttons.forEach(btn => btn.parentNode.removeChild(btn));
+
+    const replayBtn = document.createElement("button");
+    makeBtn(replayBtn, "replay", "Press here to play again");
+
+    replayBtn.addEventListener("click", reset);
 }
 
-//n is the number of rounds needed to complete a full game
-// function playGame(curr = 0, n = 5) {
-//     //If n has not been reached, it calls itself incrementing curr + plays a round
-//     result = playRound() + (curr < n ? playGame(++curr,n) : 0);
+function reset() {
 
-//     if (result < 0) {
-//         console.log("You lost...")
-//     } else if (result > 0) {
-//         console.log("You won!");
-//     } else {
-//         console.log("It's a tie... Somehow??")
-//     }
-//     return result;
-// }
+    playerWins = 0;
+    computerWins = 0;
+    setState(title);
+    setState(txt);
 
-// playGame();
+    txt.textContent = "Press any button to make your choice";
+    title.textContent = "Choose";
+
+    const btnDiv = document.querySelector(".buttons");
+
+    btnDiv.removeChild(btnDiv.firstChild);
+
+    buttons.forEach(btn => {
+        btnDiv.appendChild(btn);
+    });
+}
+
+function makeBtn(btn, className, text) {
+    btn.classList.add(className);
+    btn.textContent = text;
+    document.querySelector(".buttons").appendChild(btn);
+}
