@@ -161,11 +161,15 @@ function reset() {
 
     const btnDiv = document.querySelector(".buttons");
 
-    btnDiv.removeChild(btnDiv.firstChild);
+    btnDiv.childNodes.forEach(child => {
+        btnDiv.removeChild(child);
+    });
 
     buttons.forEach(btn => {
         btnDiv.appendChild(btn);
     });
+
+    updateScore();
 }
 
 function makeBtn(btn, className, text) {
